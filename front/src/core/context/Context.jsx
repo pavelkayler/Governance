@@ -11,6 +11,12 @@ const ContextProvider = ({ children }) => {
     await GovernorServices.connectWallet().then((data) => setWallet(data));
   };
 
+  const disconnectWallet = async () => {
+    await GovernorServices.disconnect();
+    setWallet(null);
+    setBalances([]);
+  };
+
   const getAllProposalIds = async () => {
     await GovernorServices.getAllProposalIds().then((data) => {
       setProposals(data);
@@ -35,13 +41,27 @@ const ContextProvider = ({ children }) => {
     await GovernorServices.create_A_of_B_propose(target, value, period);
   };
 
+  const create_C_or_D_propose = async (_user, simpleMost, adding, _period) => {
+    await GovernorServices.create_C_or_D_propose(_user, simpleMost, adding, _period);
+  };
+
+  const create_E_or_F_propose = async (simpleMost, _system, _newDenominator, _period) => {
+    await GovernorServices.create_E_or_F_propose(simpleMost, _system, _newDenominator, _period);
+  };
+
   const myCastVote = async (proposalId, support, amount) => {
     await GovernorServices.myCastVote(proposalId, support === true ? 1 : 0, amount);
   };
 
+  const cancel = async (proposalId) => {
+    await GovernorServices.cancel(proposalId);
+  };
+
   const values = {
     connectWallet,
+    disconnectWallet,
     wallet,
+    setWallet,
     proposals,
     getAllProposalIds,
     balances,
@@ -49,7 +69,10 @@ const ContextProvider = ({ children }) => {
     viewProposal,
     viewState,
     create_A_of_B_propose,
+    create_C_or_D_propose,
+    create_E_or_F_propose,
     myCastVote,
+    cancel,
   };
 
   return <Context.Provider value={values}>{children}</Context.Provider>;

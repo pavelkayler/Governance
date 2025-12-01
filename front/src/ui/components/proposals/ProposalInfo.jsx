@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../../core/context/Context.jsx";
-import { Card, CardBody, CardTitle, ListGroup, ListGroupItem } from "react-bootstrap";
-import GovernorServices from "../../../services/governorServices/GovernorServices.js";
-import { Voters } from "./ProposalVoters.jsx";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 
 const ProposalInfo = ({ proposalId }) => {
   const [proposal, setProposal] = useState({});
@@ -68,14 +66,6 @@ const ProposalInfo = ({ proposalId }) => {
     }
   };
 
-  // function SlashN(arr) {
-  //   return (
-  //     <>
-  //       <br>
-  //         <p></p>
-  //     </>
-  //   )
-  // }
   return (
     <ListGroup>
       <ListGroupItem>
@@ -83,13 +73,18 @@ const ProposalInfo = ({ proposalId }) => {
       </ListGroupItem>
       <ListGroupItem>Состояние голосования: {proposalState(state)}</ListGroupItem>
       <ListGroupItem>Инициатор голосования: {proposal.proposer?.toString() || ""}</ListGroupItem>
-      <ListGroupItem>Куда вложить: {proposal.target?.toString() || ""}</ListGroupItem>
-      <ListGroupItem>Сколько вложить: {proposal.value?.toString() || ""} ETHER</ListGroupItem>
+      {proposal.description?.toString() === "investing" && (
+        <>
+          <ListGroupItem>Куда вложить: {proposal.target?.toString() || ""}</ListGroupItem>
+          <ListGroupItem>Сколько вложить: {proposal.value?.toString() || ""} ETHER</ListGroupItem>
+        </>
+      )}
+      {proposal.description?.toString() === "setDao" && <ListGroupItem>Изменить права: {proposal.changeHim?.toString() || ""}</ListGroupItem>}
       <ListGroupItem>Тип предложения: {proposalType(proposal.typ?.toString()) || ""}</ListGroupItem>
       <ListGroupItem>Тип достижения кворума: {getQuorumType(proposal.typ?.toString(), proposal.simpleMost?.toString())}</ListGroupItem>
       <ListGroupItem>Время голосования: {proposal.period?.toString() / 12 || ""} минут</ListGroupItem>
-      <ListGroupItem>
-        Проголосовавшие: <p>{proposal.voters?.toString().replaceAll(",", "<br>")}</p>
+      <ListGroupItem className="voters">
+        Проголосовавшие: <p>{proposal.voters?.toString().replace(",", "\n")}</p>
       </ListGroupItem>
       <ListGroupItem>За: {proposal.votesFor?.toString() || ""}</ListGroupItem>
       <ListGroupItem>Против: {proposal.votesAgainst?.toString() || ""}</ListGroupItem>

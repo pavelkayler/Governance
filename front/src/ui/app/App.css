@@ -16,3 +16,7 @@ p {
 .form-control {
     margin-bottom: 0.5rem;
 }
+
+.list-group-item {
+    white-space: pre-wrap;
+}

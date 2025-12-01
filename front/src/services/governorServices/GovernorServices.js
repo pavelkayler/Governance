@@ -2,7 +2,7 @@ import abi from "./abi.json";
 import { ethers } from "ethers";
 
 class GovernorServices {
-  contractAddress = "0xcf950f044E11D2E0318314ecd940ec19abf51130";
+  contractAddress = "0x9F47649EAc9513B76957946bA9c1E929DDA330cC";
   rpcProvider;
   reader;
   provider;
@@ -19,6 +19,11 @@ class GovernorServices {
     this.signer = await this.provider.getSigner();
     this.writer = await new ethers.Contract(this.contractAddress, abi, this.signer);
     return await this.signer.getAddress();
+  }
+
+  async disconnect() {
+    this.signer = null;
+    this.writer = null;
   }
 
   async getAllProposalIds() {
@@ -80,11 +85,40 @@ class GovernorServices {
     }
   }
 
+  async create_C_or_D_propose(_user, simpleMost, adding, _period) {
+    !this.writer && (await this.connectWallet());
+
+    try {
+      return await this.writer.create_C_or_D_propose(_user, simpleMost, adding, _period);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async create_E_or_F_propose(simpleMost, _system, _newDenominator, _period) {
+    !this.writer && (await this.connectWallet());
+    try {
+      return await this.writer.create_E_or_F_propose(simpleMost, _system, _newDenominator, _period);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   async myCastVote(proposalId, support, amount) {
     !this.writer && (await this.connectWallet());
 
     try {
       return await this.writer.myCastVote(proposalId, support, amount);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async cancel(proposalId) {
+    !this.writer && (await this.connectWallet());
+
+    try {
+      return await this.writer.cancel(proposalId);
     } catch (error) {
       console.error(error);
     }

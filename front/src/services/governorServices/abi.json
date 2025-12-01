@@ -1774,6 +1774,16 @@
             "type": "string"
           },
           {
+            "internalType": "address",
+            "name": "changeHim",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "changeSystem",
+            "type": "bool"
+          },
+          {
             "internalType": "enum MyGovernor.proposalType",
             "name": "typ",
             "type": "uint8"
@@ -1852,6 +1862,16 @@
             "internalType": "string",
             "name": "description",
             "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "changeHim",
+            "type": "address"
+          },
+          {
+            "internalType": "bool",
+            "name": "changeSystem",
+            "type": "bool"
           },
           {
             "internalType": "enum MyGovernor.proposalType",
