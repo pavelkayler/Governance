@@ -5,18 +5,24 @@ import { Context } from "../../../core/context/Context.jsx";
 
 const Login = () => {
   const { connectWallet, wallet } = useContext(Context);
+
   const handleLogin = async () => {
     await connectWallet();
   };
 
   return (
     <div className="d-flex justify-content-center align-items-center m-2 p-2">
-      <Card className="d-flex justify-content-center align-items-center w-50">
+      {wallet === null ? (
         <Button onClick={handleLogin} className="d-flex">
           Авторизироваться через Metamask
         </Button>
-        <p className="text-muted">wallet: {wallet || "-"}</p>
-      </Card>
+      ) : (
+        <div className="d-flex flex-column justify-content-center align-items-center w-100">
+          <p>^^^^^^^^^^^^^^^^^</p>
+          <p>адрес вашего кошелька</p>
+          <b>Вы авторизированы!</b>
+        </div>
+      )}
     </div>
   );
 };

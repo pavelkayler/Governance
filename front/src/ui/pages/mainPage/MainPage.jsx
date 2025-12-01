@@ -11,6 +11,7 @@ const MainPage = () => {
       await connect;
     })();
   }, []);
+
   return (
     <>
       <Header />
